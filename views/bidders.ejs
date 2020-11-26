@@ -1,0 +1,89 @@
+<%- include('./includes/header.ejs') %>
+<!-- Dashboard Container -->
+<div class="dashboard-container">
+    <%- include('./includes/side-bar.ejs') %>
+    <!-- Dashboard Content
+    ================================================== -->
+    <div class="dashboard-content-container" data-simplebar>
+        <div class="dashboard-content-inner">
+
+            <!-- Dashboard Headline -->
+            <div class="dashboard-headline">
+                <h3>Manage Bidders</h3>
+                <!-- Breadcrumbs -->
+                <nav id="breadcrumbs" class="dark">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                        <li>Manage Bidders</li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Row -->
+            <div class="row">
+
+                <!-- Dashboard Box -->
+                <div class="col-xl-12">
+                    <div class="dashboard-box margin-top-0">
+
+                        <!-- Headline -->
+                        <div class="headline">
+                            <h3><i class="icon-material-outline-group"></i> <%= biddersNumber %>
+                                Bidders
+                            </h3>
+                        </div>
+
+                        <div class="container-fluid">
+                            <main>
+                                <div><%- include ("./partials/messages") %></div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Bidder Name</th>
+                                            <th>Status</th>
+                                            <th>Activate</th>
+                                            <th>Deactivate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (bidders.length > 0) { %>
+                                        <% for (let bidder of bidders) { %>
+                                        <tr>
+                                            <td><%= bidder.name %></td>
+                                            <td><%= bidder.isUser %></td>
+                                            <td>
+                                                <form action="/activate-bidder/<%= bidder._id %>?_method=PUT"
+                                                    method="post">
+                                                    <button type="submit" class="btn btn-info">
+                                                        Approve account
+                                                    </button>
+                                                </form>
+
+                                            </td>
+                                            <td>
+                                                <form action="/deactivate-bidder/<%= bidder._id %>?_method=PUT"
+                                                    method="post">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        Deactivate account
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                        <% } else { %>
+                                        <h1>No Bidders Found!</h1>
+                                        <% } %>
+                                    </tbody>
+
+                                </table>
+                            </main>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Row / End -->
+
+            <%- include('./includes/footer.ejs') %>
